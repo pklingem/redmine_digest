@@ -53,4 +53,10 @@ namespace :redmine do
 		DigestMailer.digests(options)
 		puts "Digest done."
 	end
+
+  task :weekly_digest, [:project] => :environment do |t, args|
+    if DateTime.now.to_date == DateTime.now.beginning_of_week.to_date
+      Rake::Task['redmine:send_digest'].invoke(Rails.env, args[:project])
+    end
+  end
 end
