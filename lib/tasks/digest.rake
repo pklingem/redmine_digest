@@ -62,7 +62,7 @@ namespace :redmine do
       Rake::Task['redmine:send_digest'].invoke(Rails.env, args[:project])
     else
       date_to_invoke = first_day_of_week + 1.week
-      Rails.logger.info "redmine:send_digest will be invoked for project #{args[:project]} on date_to_invoke"
+      Rails.logger.info "redmine:send_digest will be invoked for project #{args[:project]} on #{date_to_invoke}"
     end
   end
 end
