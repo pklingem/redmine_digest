@@ -55,8 +55,14 @@ namespace :redmine do
 	end
 
   task :weekly_digest, [:project] => :environment do |t, args|
-    if DateTime.now.to_date == DateTime.now.beginning_of_week.to_date
+    today = DateTime.now.to_date
+    first_day_of_week = DateTime.now.beginning_of_week.to_date
+    if today == first_day_of_week
+      Rails.logger.info "Invoking redmine:send_digest for project #{args[:project]}"
       Rake::Task['redmine:send_digest'].invoke(Rails.env, args[:project])
+    else
+      date_to_invoke = first_day_of_week + 1.week
+      Rails.logger.info "redmine:send_digest will be invoked for project #{args[:project]} on date_to_invoke"
     end
   end
 end
